@@ -59,3 +59,4 @@ android/app/src/main/res/values-night/styles.xml
 android/app/src/profile/AndroidManifest.xml
 android/gradle/wrapper/gradle-wrapper.properties
 ios/.gitignore
+android/gradle/wrapper/gradle-7.4.1-all.zip
