@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nativemaps/widgets/image_input.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   const AddPlaceScreen({super.key});
@@ -40,11 +41,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                   const SizedBox(
                     height: 10.0,
                   ),
-                  Container(),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text('preview'),
-                  )
+                  const ImageInput()
                 ],
               ),
             ))),
