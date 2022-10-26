@@ -60,3 +60,16 @@ android/app/src/profile/AndroidManifest.xml
 android/gradle/wrapper/gradle-wrapper.properties
 ios/.gitignore
 android/gradle/wrapper/gradle-7.4.1-all.zip
+android/gradle/wrapper/gradle-wrapper.jar
+android/.gradle/7.4/gc.properties
+android/.gradle/7.4/checksums/checksums.lock
+android/.gradle/7.4/dependencies-accessors/dependencies-accessors.lock
+android/.gradle/7.4/dependencies-accessors/gc.properties
+android/.gradle/7.4/executionHistory/executionHistory.lock
+android/.gradle/7.4/fileChanges/last-build.bin
+android/.gradle/7.4/fileHashes/fileHashes.lock
+android/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+android/.gradle/buildOutputCleanup/cache.properties
+android/.gradle/vcs-1/gc.properties
+android/gradlew
+android/gradlew.bat
