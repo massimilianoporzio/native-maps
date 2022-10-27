@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ImageInput extends StatefulWidget {
   const ImageInput({super.key});
@@ -11,6 +12,28 @@ class ImageInput extends StatefulWidget {
 
 class _ImageInputState extends State<ImageInput> {
   File? _storedImage;
+  dynamic _pickImageError;
+  final ImagePicker picker = ImagePicker();
+
+  Future<void> getImage(ImageSource source, BuildContext ctx) async {
+    final pickedFile = await picker.pickImage(source: source, maxWidth: 600);
+    try {
+      setState(() {
+        if (pickedFile != null) {
+          _storedImage = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+      if (!mounted) return; //! esci se widget non mounted
+      Navigator.pop(ctx);
+    } catch (error) {
+      setState(() {
+        _pickImageError = error;
+        throw Exception();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +64,37 @@ class _ImageInputState extends State<ImageInput> {
             child: TextButton.icon(
                 style: TextButton.styleFrom(
                     foregroundColor: Theme.of(context).colorScheme.primary),
-                onPressed: () {
+                onPressed: () async {
                   //*open the device's camera
+                  //flutter dà bridge alle features del sistema operativo
+                  await showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: const Text('Choose an Image'),
+                      content: const Text(
+                          "choose the image from gallery or snap a photo"),
+                      actions: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: TextButton(
+                            onPressed: () {
+                              getImage(ImageSource.gallery, ctx);
+                            },
+                            child: const Text('Gallery'),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: TextButton(
+                            onPressed: () {
+                              getImage(ImageSource.camera, ctx);
+                            },
+                            child: const Text('Camera'),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.camera),
                 label: const Text('Take Picture')))
