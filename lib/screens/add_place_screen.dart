@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:nativemaps/providers/great_places.dart';
 import 'package:nativemaps/widgets/image_input.dart';
+import 'package:provider/provider.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   const AddPlaceScreen({super.key});
@@ -12,6 +16,20 @@ class AddPlaceScreen extends StatefulWidget {
 
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
+  late File? _pickedImage;
+
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage;
+  }
+
+  void _savePlace() {
+    if (_titleController.text.isEmpty || _pickedImage == null) {
+      return; //esco subito (validazione)
+    }
+    Provider.of<GreatPlaces>(context, listen: false)
+        .addPlace(_titleController.text, _pickedImage!);
+    Navigator.of(context).pop(); //esco dalla pagina
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +59,25 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                   const SizedBox(
                     height: 10.0,
                   ),
-                  const ImageInput()
+                  ImageInput(
+                    onSelectImage: _selectImage,
+                  )
                 ],
               ),
             ))),
-            const AddButton()
+            AddButton(
+              onPressed: _savePlace,
+            )
           ]),
     );
   }
 }
 
 class AddButton extends StatelessWidget {
+  final VoidCallback onPressed;
   const AddButton({
     Key? key,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -66,7 +90,7 @@ class AddButton extends StatelessWidget {
             elevation: 0,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-        onPressed: () {},
+        onPressed: onPressed,
         icon: const Icon(Icons.add),
         label: const Text('Add Place'));
   }
