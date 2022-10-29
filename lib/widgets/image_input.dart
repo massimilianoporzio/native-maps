@@ -26,6 +26,8 @@ class _ImageInputState extends State<ImageInput> {
           _storedImage = File(pickedFile.path);
         } else {
           print('No image selected.');
+          Navigator.pop(ctx);
+          return;
         }
       });
       //SALVO
