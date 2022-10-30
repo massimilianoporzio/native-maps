@@ -21,23 +21,34 @@ class PlacesListScreen extends StatelessWidget {
           ],
         ),
         body: //QUI CONSUMO Places
-            Consumer<GreatPlaces>(
-          child: const Center(
-              child: Text('Got no places yest, start adding some!')),
-          builder: (context, greatPlaces, ch) => greatPlaces.items.isEmpty
-              ? ch!
-              : ListView.builder(
-                  itemCount: greatPlaces.items.length,
-                  itemBuilder: (context, index) => ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage:
-                          FileImage(greatPlaces.items[index].image),
-                    ),
-                    title: Text(greatPlaces.items[index].title),
-                    onTap: () {
-                      //*GO TO DETAIL PAGE
-                    },
-                  ),
+            FutureBuilder(
+          future: Provider.of<GreatPlaces>(context, listen: false)
+              .fetchAndSetPlaecs(),
+          builder: (context, snapshot) => snapshot.connectionState ==
+                  ConnectionState.waiting
+              ? Center(
+                  child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.secondary),
+                )
+              : Consumer<GreatPlaces>(
+                  child: const Center(
+                      child: Text('Got no places yest, start adding some!')),
+                  builder: (context, greatPlaces, ch) =>
+                      greatPlaces.items.isEmpty
+                          ? ch!
+                          : ListView.builder(
+                              itemCount: greatPlaces.items.length,
+                              itemBuilder: (context, index) => ListTile(
+                                leading: CircleAvatar(
+                                  backgroundImage:
+                                      FileImage(greatPlaces.items[index].image),
+                                ),
+                                title: Text(greatPlaces.items[index].title),
+                                onTap: () {
+                                  //*GO TO DETAIL PAGE
+                                },
+                              ),
+                            ),
                 ),
         ));
   }
