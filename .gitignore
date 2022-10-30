@@ -74,3 +74,4 @@ android/.gradle/vcs-1/gc.properties
 android/gradlew
 android/gradlew.bat
 .env
+lib/env/env.g.dart
