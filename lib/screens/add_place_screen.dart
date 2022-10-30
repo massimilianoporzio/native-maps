@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:nativemaps/providers/great_places.dart';
 import 'package:nativemaps/widgets/image_input.dart';
+import 'package:nativemaps/widgets/location_input.dart';
 import 'package:provider/provider.dart';
 
 class AddPlaceScreen extends StatefulWidget {
@@ -61,7 +62,11 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                   ),
                   ImageInput(
                     onSelectImage: _selectImage,
-                  )
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  const LocationInput(),
                 ],
               ),
             ))),
